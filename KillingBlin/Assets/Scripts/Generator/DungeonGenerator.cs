@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonGenerator : MonoBehaviour
+public class DungeonGenerator : MonoSingleton<DungeonGenerator>
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool GenerateDungeon()
     {
-        
+        return true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
