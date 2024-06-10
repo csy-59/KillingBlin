@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
-using Defines.DungeonDefines;
 
 /// <summary>
 /// 방에 대한 정보
@@ -13,7 +12,7 @@ public struct RoomInfo
 {
     public RoomType Type { get; set; }
     public RoomDifficulty Difficulty { get; set; }
-    public DoorPosition DoorPos { get; set; }
+    public byte DoorPos { get; set; }
 
 
     private RoomBase _room;
@@ -21,7 +20,7 @@ public struct RoomInfo
 
     private Dictionary<DoorPosition, RoomBase> _leafRoom;
 
-    public RoomInfo(RoomType type = RoomType.RT_Start, RoomDifficulty difficulty = RoomDifficulty.RD_MAX, DoorPosition doorPosition = DoorPosition.DP_COUNT)
+    public RoomInfo(RoomType type = RoomType.RT_Start, RoomDifficulty difficulty = RoomDifficulty.RD_MAX, byte doorPosition = (byte)DoorPosition.DP_COUNT)
     {
         Type = type;
         Difficulty = difficulty;
@@ -33,7 +32,7 @@ public struct RoomInfo
     /// <summary>
     /// 방의 정보를 기반으로 랜덤 방을 세팅함
     /// </summary>
-    public bool SetRoom()
+    public bool SetRoom(Vector3 pos)
     {
         if (RoomManager.Instance.GetRandomRoom(in this, out _room) == false)
         {
@@ -41,13 +40,19 @@ public struct RoomInfo
             return false;
         }
 
+        _room = GameObject.Instantiate(_room);
+        _room.SetRoomDoor(DoorPos);
+        _room.transform.localPosition = pos;
+        _room.gameObject.SetActive(false);
+        _room.gameObject.SetActive(true);
+
         return true;
     }
 
     /// <summary>
     /// 방의 정보 세팅
     /// </summary>
-    public void SetRoomInfo(RoomType type, RoomDifficulty difficulty, DoorPosition doorPosition)
+    public void SetRoomInfo(RoomType type, RoomDifficulty difficulty, byte doorPosition)
     {
         Type = type;
         Difficulty = difficulty;
@@ -62,7 +67,7 @@ public struct RoomInfo
     public bool AddLeafRoom(DoorPosition door, in RoomBase leafRoom)
     {
         // 해당 하는 문 없음
-        if (((int)Room.DoorPosition & (int)door) <= 0)
+        if (((int)Room.DoorPos & (int)door) <= 0)
             return false;
 
         // 이미 해당 하는 문에 연결 됨

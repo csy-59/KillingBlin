@@ -4,135 +4,78 @@ using UnityEngine;
 using System;
 using Defines.DungeonDefines;
 using System.Linq;
+using UnityEngine.UI;
 
 public class DungeonGenerator : MonoSingleton<DungeonGenerator>
 {
-    [Serializable]
-    private struct RoomRatio
+    private const float _screenX = 1920f, _screenY = 1080f;
+    [Header("Map Size")]
+    [SerializeField] private int _widthCount;
+    [SerializeField] private int _heightCount;
+
+    [Header("Room Count")]
+    [SerializeField] private int _totalRoomCount;
+    [SerializeField] private int _specialRoomCount;
+    [SerializeField] private int _BossRoomCount;
+
+    [Header("btn")]
+    [SerializeField] private Button btn;
+
+    private RoomInfo[,] _mapList;
+    private List<RoomInfo> _roomInfos;
+
+    public override void Start()
     {
-        [Header("RoomType")]
-        [SerializeField] private int _start;
-        public int Start    { get => _start; }
-
-        [SerializeField] private int _end;
-        public int End    { get => _end; }
-
-        [SerializeField] private int _boss;
-        public int Boss { get => _boss; }
-
-        [SerializeField] private int _normal;
-        public int Normal { get => _normal; }
-
-        [SerializeField] private int _special;
-        public int Special { get => _special; }
-
-        // 기본 방일 경우의 난이도 확률
-        [Header("Difficulty")]
-        [SerializeField] private int _easy;
-        public int Easy { get => _easy; }
-
-        [SerializeField] private int _mid;
-        public int Mid { get => _mid; }
-
-        [SerializeField] private int _hard;
-        public int Hard { get => _hard; }
-
-        // 기타 유틸
-        public int TotalRoomTypeRatio { get => Start + End + Boss + Normal + Special; }
-        public int TotalNormalDifficulty { get => Easy + Mid + Hard; }
-
+        btn.onClick.AddListener(() => { GenerateDungeon(); });
     }
-    // 기본 던전 생성 시 방 생성 확률
-    [SerializeField] private RoomRatio[] _roomRatio;
-
-    // 던전 구성의 인포
-    [SerializeField] private List<RoomInfo> _roomInfo = new List<RoomInfo>();
-
-    private Queue<RoomInfo> _queue = new Queue<RoomInfo>();
 
     public bool GenerateDungeon()
     {
-        _roomInfo.Clear();
-        int ratioIndex = 0;
-        int levelCount = 0;
+        _mapList = new RoomInfo[_heightCount, _widthCount];
 
-        // BFS로 기본 던전 구성
-        _queue.Clear();
-        RoomInfo info = new RoomInfo();
-        RoomInfo newInfo;
-        RoomRatio ratio = _roomRatio[ratioIndex];
-        GetRandomRoomInfo(in ratio, 0, ref info);
-        _queue.Enqueue(info);
-        _roomInfo.Add(info);
+        int roomCount = _totalRoomCount;
+        int totalMapSize = _heightCount * _widthCount;
 
-        do
+        // 기본 맵 생성
+        for (int i = 0; i < _heightCount; ++i)
         {
-            if(levelCount <= 0)
+            int _iValue = i * _widthCount;
+            for(int j = 0; j < _widthCount; ++j)
             {
-                levelCount = _queue.Count;
-                ++ratioIndex;
-                ratio = _roomRatio[ratioIndex];
-            }
-
-            info = _queue.Dequeue();
-            --levelCount;
-
-            bool isFoward = true;
-            for (int i = 0; i < (int)DoorPosition.DP_COUNT; ++i)
-            {
-                byte dPos = (byte)((byte)info.DoorPos | ((byte)DoorPosition.DP_Top << (i * 2)));
-                if(dPos != 0) // 해당 위치에 문이 있다면
+                if (roomCount <= 0) // 모든 맵이 할당 되었다면
                 {
-                    newInfo = new RoomInfo();
-                    GetRandomRoomInfo(in ratio, (byte)(isFoward ? dPos << 2 : dPos >> 2), ref newInfo);
-                    _roomInfo.Add(newInfo);
+                    _mapList[i, j].Type = RoomType.RT_None;
+                    continue;
                 }
-                isFoward = !isFoward;
-            }
 
-        } while(_queue.Count > 0);
+                int nValue = UnityEngine.Random.Range(0, totalMapSize - (_iValue + j));
+                _mapList[i, j].Type = nValue < roomCount ? RoomType.RT_Normal : RoomType.RT_None;
+                
+                if(nValue < roomCount)
+                {
+                    _mapList[i, j].SetRoom(new Vector3(i, j, 0f));
+                    _roomInfos.Add(_mapList[i, j]);
+                    --roomCount;
+                }
+
+            }
+        }
+
+        // 기본 맵 중 중심점 찾기
+
+        // 맵 중심점으로 이으기
+
+        // 각 룸 설렉하기
+        // 보스룸: 마지막에 연결된 룸
+        // 스페셜 룸: 마지막 직전에 연결된 룸
+        // 스타트룸: 가장 중간에 있는 룸
+
 
         return true;
     }
 
-    private void GetRandomRoomInfo(in RoomRatio ratio, byte openDoorPos, ref RoomInfo info)
+    private void GetRandomRoomInfo()
     {
-        RoomType type = RoomType.RT_Start;
-        int value = UnityEngine.Random.Range(0, ratio.TotalRoomTypeRatio);
-        if (value < ratio.Start) { type = RoomType.RT_Start; }
-        else if (value < ratio.End) { type = RoomType.RT_End; }
-        else if (value < ratio.Boss) { type = RoomType.RT_Boss; }
-        else if (value < ratio.Normal) { type = RoomType.RT_Normal; }
-        else if (value < ratio.Special) { type = RoomType.RT_Special; }
-
-        RoomDifficulty difficulty = RoomDifficulty.RD_MAX;
-        value = UnityEngine.Random.Range(0, ratio.TotalNormalDifficulty);
-        if (value < ratio.Easy) { difficulty = RoomDifficulty.RD_Easy; }
-        else if (value < ratio.Mid) { difficulty = RoomDifficulty.RD_Mid; }
-        else if (value < ratio.Hard) { difficulty = RoomDifficulty.RD_Hard; }
-
-        byte dPos = 0;
-        bool[] doorPos = {
-            (openDoorPos | (byte)DoorPosition.DP_Top) != 0,
-            (openDoorPos | (byte)DoorPosition.DP_Bottom) != 0,
-            (openDoorPos | (byte)DoorPosition.DP_Left) != 0,
-            (openDoorPos | (byte)DoorPosition.DP_Right) != 0
-        };
-
-        int count = doorPos.Where(_ => _ == false).Select(o => o).Count();
-        value = type == RoomType.RT_End ? 0 :UnityEngine.Random.Range(0, count);
-        for (int i = 0; i <= value; ++i)
-        {
-            int index = -1;
-            do
-            {
-                index = UnityEngine.Random.Range(0, (int)DoorPosition.DP_COUNT);
-            } while (doorPos[index] == false);
-            doorPos[index] = true;
-
-            dPos = (byte)(dPos | ((byte)DoorPosition.DP_Top << 2 * index));
-        }
-
-        info.SetRoomInfo(type, difficulty, (DoorPosition)dPos);
+        
     }
 }

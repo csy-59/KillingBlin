@@ -12,23 +12,15 @@ public class RoomBase : MonoBehaviour
 
     [SerializeField] private RoomDifficulty _difficulty = RoomDifficulty.RD_Mix_Easy;
     public RoomDifficulty Difficulty { get => _difficulty; }
-    [SerializeField] private DoorPosition[] _roomDoor;
-    public DoorPosition DoorPosition
+    [SerializeField] private byte _roomDoor;
+    public byte DoorPos
     {
-        get
-        {
-            int roomPosition = 0;
-            foreach(var position in _roomDoor)
-            {
-                roomPosition |= (int)position;
-            }
-            return (DoorPosition) roomPosition;
-        }
+        get => _roomDoor;
     }
 
     public bool isDoorPositionMatch(DoorPosition position)
     {
-        return ((int)DoorPosition & (int)position) == (int)position;
+        return (DoorPos & (int)position) == (int)position;
     }
 
     [Header("Inner Info")]
@@ -43,5 +35,10 @@ public class RoomBase : MonoBehaviour
     public void Restart()
     {
 
+    }
+
+    public void SetRoomDoor(byte doorPos)
+    {
+        _roomDoor = doorPos;
     }
 }

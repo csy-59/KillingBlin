@@ -12,9 +12,8 @@ public class RoomManager : MonoSingleton<RoomManager>
     {
         RoomInfo room = info;
         var potionalRoom = _roomList.Where(
-            _ => _.RoomType == room.Type && // 방의 타입
-            _.Difficulty == room.Difficulty && // 방의 난이도
-            _.isDoorPositionMatch(room.DoorPos) // 방의 문 위치
+            _ => _.RoomType == room.Type /*&& // 방의 타입
+            _.Difficulty == room.Difficulty // 방의 난이도*/
             ).Select(o => o);
 
         if (potionalRoom.Count() <= 0)

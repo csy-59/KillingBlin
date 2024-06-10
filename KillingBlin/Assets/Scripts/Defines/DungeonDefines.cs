@@ -9,10 +9,10 @@ namespace Defines
         public enum RoomType
         {
             RT_Start,
-            RT_End,
             RT_Boss,
             RT_Normal,
-            RT_Special
+            RT_Special,
+            RT_None
         }
 
         public enum RoomDifficulty
