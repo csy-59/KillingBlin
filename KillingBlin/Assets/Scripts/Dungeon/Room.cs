@@ -7,15 +7,15 @@ using System.Runtime.InteropServices.WindowsRuntime;
 public class Room : MonoBehaviour
 {
     [Header("Doors")]
-    [SerializeField] private GameObject topDoor;
-    [SerializeField] private GameObject bottomDoor;
-    [SerializeField] private GameObject leftDoor;
-    [SerializeField] private GameObject rightDoor;
+    [SerializeField] private GameObject[] topDoor = new GameObject[(int)Difficulty.Boss + 1];
+    [SerializeField] private GameObject[] bottomDoor = new GameObject[(int)Difficulty.Boss + 1];
+    [SerializeField] private GameObject[] leftDoor = new GameObject[(int)Difficulty.Boss + 1];
+    [SerializeField] private GameObject[] rightDoor = new GameObject[(int)Difficulty.Boss + 1];
 
     private Room[] nextRooms = new Room[(int)DoorPosition.MAX];
 
     [Header("RoomType")]
-    [SerializeField] private SpriteRenderer map;
+    [SerializeField] private GameObject[] maps = new GameObject[(int)RoomType.MAX];
     private RoomType roomType = RoomType.Normal;
     public RoomType RoomType
     {
@@ -23,18 +23,19 @@ public class Room : MonoBehaviour
         set
         {
             roomType = value;
-            switch(roomType)
-            {
-                case RoomType.Start: map.color = Color.white; break;
-                case RoomType.Boss: map.color = Color.black; break;
-                case RoomType.Normal: map.color = Color.green; break;
-                case RoomType.Special: map.color = Color.cyan; break;
-            }
+
+            foreach(var map in maps)
+                map.SetActive(false);
+
+            if (roomType == RoomType.MAX)
+                maps[0].SetActive(true);
+            else
+                maps[(int)roomType].SetActive(true);
         }
     }
 
     [Header("Difficulty")]
-    [SerializeField] private SpriteRenderer difficultySprite;
+    [SerializeField] private GameObject[] walls = new GameObject[(int)Difficulty.Boss + 1];
     [SerializeField] private Difficulty difficulty = Difficulty.None;
     public Difficulty Difficulty
     {
@@ -42,15 +43,11 @@ public class Room : MonoBehaviour
         set
         {
             difficulty = value;
-            switch (difficulty)
-            {
-                case Difficulty.None: difficultySprite.color = Color.white; break;
-                case Difficulty.Easy: difficultySprite.color = Color.blue; break;
-                case Difficulty.Mid_1: difficultySprite.color = Color.yellow; break;
-                case Difficulty.Mid_2: difficultySprite.color = Color.yellow; break;
-                case Difficulty.Hard: difficultySprite.color = Color.red; break;
-                case Difficulty.Boss: difficultySprite.color = Color.black; break;
-            }
+
+            foreach (var wall in walls)
+                wall.SetActive(false);
+
+            walls[(int)difficulty].SetActive(true);
         }
     }
 
@@ -59,14 +56,14 @@ public class Room : MonoBehaviour
 
     public void OpenDoor(DoorPosition direction, Room nextRoom)
     {
-        GameObject door = topDoor;
+        GameObject door = topDoor[(int)difficulty];
         int nextRoomIndex = 0;
         switch (direction)
         {
-            case DoorPosition.Top:      { door = topDoor; nextRoomIndex = (int)DoorPosition.Top; break; }
-            case DoorPosition.Bottom:   { door = bottomDoor; nextRoomIndex = (int)DoorPosition.Bottom; break; }
-            case DoorPosition.Left:     { door = leftDoor; nextRoomIndex = (int)DoorPosition.Left; break; }
-            case DoorPosition.Right:    { door = rightDoor; nextRoomIndex = (int)DoorPosition.Right; break; }
+            case DoorPosition.Top:      { door = topDoor[(int)difficulty]; nextRoomIndex = (int)DoorPosition.Top; break; }
+            case DoorPosition.Bottom:   { door = bottomDoor[(int)difficulty]; nextRoomIndex = (int)DoorPosition.Bottom; break; }
+            case DoorPosition.Left:     { door = leftDoor[(int)difficulty]; nextRoomIndex = (int)DoorPosition.Left; break; }
+            case DoorPosition.Right:    { door = rightDoor[(int)difficulty]; nextRoomIndex = (int)DoorPosition.Right; break; }
         }
 
         door.SetActive(true); 

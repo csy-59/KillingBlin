@@ -11,7 +11,8 @@ namespace Defines
             Start,
             Boss,
             Normal,
-            Special
+            Special,
+            MAX
         }
 
         public enum Difficulty
