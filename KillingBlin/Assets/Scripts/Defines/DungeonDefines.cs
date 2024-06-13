@@ -13,5 +13,24 @@ namespace Defines
             Normal,
             Special
         }
+
+        public enum Difficulty
+        {
+            None,
+            Easy,
+            Mid_1,
+            Mid_2,
+            Hard,
+            Boss
+        }
+
+        public enum DoorPosition : byte
+        {
+            Top,
+            Bottom,
+            Left,
+            Right,
+            MAX
+        }
     }
 }

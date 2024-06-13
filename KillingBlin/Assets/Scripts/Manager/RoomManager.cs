@@ -4,19 +4,22 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.UIElements.Experimental;
+using Defines.DungeonDefines;
+using UnityEditor.Search;
+using UnityEngine.Rendering.Universal;
 
 public class RoomManager : MonoSingleton<RoomManager>
 {
     [SerializeField] GameObject roomPrefab;
-    [SerializeField] private int maxRooms = 15;
-    [SerializeField] private int minRooms = 10;
+    [SerializeField] private int maxRooms = 20;
+    [SerializeField] private int minRooms = 15;
 
     const int roomWidth = 20;
     const int roomHeight = 12;
     const float roomGenerateFailRate = 0.5f;
 
-    [SerializeField] const int gridSizeX = 10;
-    [SerializeField] const int gridSizeY = 10;
+    [SerializeField] const int gridSizeX = 15;
+    [SerializeField] const int gridSizeY = 15;
 
     private List<GameObject> roomObjects = new List<GameObject>();
 
@@ -89,6 +92,13 @@ public class RoomManager : MonoSingleton<RoomManager>
     // 방생성 종료 후 방 세팅
     private void EndRoomGeneration()
     {
+        SetRoomType();
+        SetRoomDifficulty();
+    }
+
+    // 방의 타입(시작, 보스, 스페셜, 노멀) 지정
+    private void SetRoomType()
+    {
         foreach (var r in roomObjects)
         {
             r.GetComponent<Room>().RoomType = Defines.DungeonDefines.RoomType.Normal;
@@ -100,6 +110,100 @@ public class RoomManager : MonoSingleton<RoomManager>
         specialRoom.RoomType = Defines.DungeonDefines.RoomType.Special;
         startRoom.RoomType = Defines.DungeonDefines.RoomType.Start;
         bossRoom.RoomType = Defines.DungeonDefines.RoomType.Boss;
+    }
+
+    // 각 방의 난이도 지정(쉬움, 중간, 어려움
+    private void SetRoomDifficulty()
+    {
+        bool[,] isRoomVisited = new bool[gridSizeX, gridSizeY];
+        List<List<Room>> roomsByDepth = new List<List<Room>>();
+        Queue<Room> queue = new Queue<Room>();
+        int count = 1; int depth = 0;
+
+        queue.Enqueue(startRoom);
+        roomsByDepth.Add(new List<Room>());
+
+        do
+        {
+            if (count <= 0)
+            {
+                count = queue.Count;
+                ++depth;
+                roomsByDepth.Add(new List<Room>());
+            }
+
+            Room r = queue.Peek();
+            queue.Dequeue();
+            --count;
+
+            if (isRoomVisited[r.RoomIndex.x, r.RoomIndex.y] == true)
+                continue;
+
+            isRoomVisited[r.RoomIndex.x, r.RoomIndex.y] = true;
+            roomsByDepth[depth].Add(r);
+
+            Room nRoom = null;
+            if(r.TryGetNextRoom(DoorPosition.Top, ref nRoom) == true && isRoomVisited[nRoom.RoomIndex.x, nRoom.RoomIndex.y] == false)
+            {
+                queue.Enqueue(nRoom);
+            }
+            if(r.TryGetNextRoom(DoorPosition.Bottom, ref nRoom) && isRoomVisited[nRoom.RoomIndex.x, nRoom.RoomIndex.y] == false)
+            {
+                queue.Enqueue(nRoom);
+            }
+            if(r.TryGetNextRoom(DoorPosition.Left, ref nRoom) && isRoomVisited[nRoom.RoomIndex.x, nRoom.RoomIndex.y] == false)
+            {
+                queue.Enqueue(nRoom);
+            }
+            if(r.TryGetNextRoom(DoorPosition.Right, ref nRoom) && isRoomVisited[nRoom.RoomIndex.x, nRoom.RoomIndex.y] == false)
+            {
+                queue.Enqueue(nRoom);
+            }
+
+        } while (queue.Count > 0);
+
+        // 뎁스에 따라 난이도 조절
+        int depthCount = roomsByDepth.Count;
+        int roomsCount = 0; int bossDifficulty = (int)Difficulty.Boss;
+        for(int i = 0; i < depthCount; ++i)
+        {
+            roomsCount = roomsByDepth[i].Count;
+            var rooms = roomsByDepth[i];
+            for(int j = 0; j< roomsCount; ++j)
+            {
+                rooms[j].Difficulty = (i < bossDifficulty ? (Difficulty)i : Difficulty.Hard);
+            }
+        }
+
+        // 스페셜 방과 보스 방 바로 직전 방은 무조건 난이도 하드
+        SetAroundRoomDifficulty(specialRoom, Difficulty.Hard);
+        SetAroundRoomDifficulty(bossRoom, Difficulty.Hard);
+
+        // 중요 룸 난이도 세팅
+        startRoom.Difficulty = Difficulty.None;
+        specialRoom.Difficulty = Difficulty.None;
+        bossRoom.Difficulty = Difficulty.Boss;
+    }
+
+    private void SetAroundRoomDifficulty(Room originRoom, Difficulty difficulty)
+    {
+        Room nRoom = null;
+        if (originRoom.TryGetNextRoom(DoorPosition.Top, ref nRoom))
+        {
+            nRoom.Difficulty = difficulty;
+        }
+        if (originRoom.TryGetNextRoom(DoorPosition.Bottom, ref nRoom))
+        {
+            nRoom.Difficulty = difficulty;
+        }
+        if (originRoom.TryGetNextRoom(DoorPosition.Left, ref nRoom))
+        {
+            nRoom.Difficulty = difficulty;
+        }
+        if (originRoom.TryGetNextRoom(DoorPosition.Right, ref nRoom))
+        {
+            nRoom.Difficulty = difficulty;
+        }
     }
 
     // 방 만들기 시도: 이미 방을 다 만들었거나, 유효한 방이 아닐 경우, 혹은 랜덤의 확률로 생성이 이루어지지 않음
@@ -158,27 +262,31 @@ public class RoomManager : MonoSingleton<RoomManager>
     private void OpenDoor(GameObject room, int x, int y)
     {
         Room newRoomScript = room.GetComponent<Room>();
-
+        Room nextRoomScript;
 
         if (x - 1 >= 0 && roomGrid[x - 1, y] != 0)
         {
-            newRoomScript.OpenDoor(Vector2Int.left);
-            GetRoomScriptAt(new Vector2Int(x - 1, y)).OpenDoor(Vector2Int.right);
+            nextRoomScript = GetRoomScriptAt(new Vector2Int(x - 1, y));
+            nextRoomScript.OpenDoor(DoorPosition.Right, newRoomScript);
+            newRoomScript.OpenDoor(DoorPosition.Left, nextRoomScript);
         }
         if (x + 1 < gridSizeX && roomGrid[x + 1, y] != 0)
         {
-            newRoomScript.OpenDoor(Vector2Int.right);
-            GetRoomScriptAt(new Vector2Int(x + 1, y)).OpenDoor(Vector2Int.left);
+            nextRoomScript = GetRoomScriptAt(new Vector2Int(x + 1, y));
+            nextRoomScript.OpenDoor(DoorPosition.Left, newRoomScript);
+            newRoomScript.OpenDoor(DoorPosition.Right, nextRoomScript);
         }
         if (y - 1 >= 0 && roomGrid[x, y - 1] != 0)
         {
-            newRoomScript.OpenDoor(Vector2Int.down);
-            GetRoomScriptAt(new Vector2Int(x, y - 1)).OpenDoor(Vector2Int.up);
+            nextRoomScript = GetRoomScriptAt(new Vector2Int(x, y - 1));
+            nextRoomScript.OpenDoor(DoorPosition.Top, newRoomScript);
+            newRoomScript.OpenDoor(DoorPosition.Bottom, nextRoomScript);
         }
         if (y + 1 < gridSizeY && roomGrid[x, y + 1] != 0)
         {
-            newRoomScript.OpenDoor(Vector2Int.up);
-            GetRoomScriptAt(new Vector2Int(x, y + 1)).OpenDoor(Vector2Int.down);
+            nextRoomScript = GetRoomScriptAt(new Vector2Int(x, y + 1));
+            nextRoomScript.OpenDoor(DoorPosition.Bottom, newRoomScript);
+            newRoomScript.OpenDoor(DoorPosition.Top, nextRoomScript);
         }
     }
 
