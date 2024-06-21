@@ -27,9 +27,13 @@ MonoBehaviour:
     , Strength  by  0 points(s).Sword Rain increases Strength  by  2 points(s) and
     , Strength  by  0 points(s).Sword Rain increases Strength  by  0 points(s) and
     , Strength  by  0 points(s).Sword Rain increases Strength  by  0 points(s) and
+    , Strength  by  0 points(s).Sword Rain increases Strength  by  0 points(s) and
+    , Strength  by  0 points(s).Sword Rain increases Strength  by  0 points(s) and
+    , Strength  by  0 points(s).Sword Rain increases Strength  by  0 points(s) and
     , Strength  by  0 points(s).
   SkillIcon: {fileID: 0}
   SkillPrerequisites:
+  - {fileID: 0}
   - {fileID: 0}
   SkillTier: 0
   Cost: 0
