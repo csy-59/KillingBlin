@@ -12,11 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e00bb2fa3e0a6e4287b5f1ad1aecf5e, type: 3}
   m_Name: Sword Rain
   m_EditorClassIdentifier: 
+  UpgradeData:
+  - StatType: 0
+    SkillIncreaseAmount: 0
+    IsPercentage: 0
+  - StatType: 0
+    SkillIncreaseAmount: 0
+    IsPercentage: 0
   IsAbility: 0
-  SkillName: 
+  SkillName: Sword Rain
   OverwriteDescription: 0
-  SkillDescription: 
+  SkillDescription: Sword Rain increases Strength  by  0 points(s).Sword Rain increases
+    Strength  by  0 points(s).Sword Rain increases Strength  by  0 points(s) and
+    , Strength  by  0 points(s).Sword Rain increases Strength  by  2 points(s) and
+    , Strength  by  0 points(s).Sword Rain increases Strength  by  0 points(s) and
+    , Strength  by  0 points(s).Sword Rain increases Strength  by  0 points(s) and
+    , Strength  by  0 points(s).
   SkillIcon: {fileID: 0}
-  SkillPrerequisites: []
+  SkillPrerequisites:
+  - {fileID: 0}
   SkillTier: 0
   Cost: 0
