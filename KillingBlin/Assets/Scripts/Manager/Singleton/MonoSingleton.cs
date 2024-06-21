@@ -18,7 +18,7 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
             if(_instance == null)
             {
                 GameObject go = new GameObject();
-                _instance =  go.AddComponent<T>();
+                _instance = go.AddComponent<T>();
             }
 
             return _instance;
@@ -38,5 +38,11 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
         }
 
         _isThereInstance = true;
+        OnInit();
+    }
+
+    protected virtual void OnInit()
+    {
+        
     }
 }
