@@ -12,12 +12,21 @@ public class PlayerController : MonoBehaviour
     float maxWalkSpeed = 2.0f;
     Animator animator;
 
+    public int maxHealth = 100;
+    public int currentHealth;
+    public int attackDamage = 10;
+
+
+    // 체력 회복, 공격, 이동 등의 메서드를 추가로 작성합니다.
+
     // Start is called before the first frame update
     void Start()
     {
         Application.targetFrameRate = 60;
         this.rigid2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -71,11 +80,11 @@ public class PlayerController : MonoBehaviour
             this.animator.SetTrigger("isNormalCriticalAttacking");
         }
 
-        // 수정 필요
-        if (/*플레이어의 체력이 0이 되었을때*/)
-        {
-            this.animator.SetTrigger("Death");
-        }
+        //// 수정 필요
+        //if (/*플레이어의 체력이 0이 되었을때*/)
+        //{
+        //    this.animator.SetTrigger("Death");
+        //}
 
 
         // 좌우 이동
