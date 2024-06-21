@@ -19,5 +19,11 @@ namespace Defines
             Hard = 0b010,
         }
 
+        public enum MonsterType : byte
+        {
+            Normal = 0b000,
+            Boss = 0b100,
+        }
+
     }
 }

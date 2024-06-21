@@ -6,22 +6,23 @@ using Defines.FSMDefines;
 
 public class MonsterFSMManager : MonoBehaviour
 {
-    private Dictionary<Defines.FSMDefines.MonsterState, MonsterStateBase> states = new Dictionary<Defines.FSMDefines.MonsterState, MonsterStateBase>();
+    private Dictionary<Defines.FSMDefines.MonsterFSMState, MonsterStateBase> states = new Dictionary<Defines.FSMDefines.MonsterFSMState, MonsterStateBase>();
     private bool isThereState = false;
     private MonsterStateBase currentState;
+    [SerializeField] MonsterFSMState state;
     
     public GameObject GetMyGameObject()
     {
         return gameObject;
     }
 
-    private void AddState(Defines.FSMDefines.MonsterState state, MonsterStateBase Behaviour)
+    public void AddState(Defines.FSMDefines.MonsterFSMState state, MonsterStateBase Behaviour)
     {
         states[state] = Behaviour;
         Behaviour.Init(this);
     }
 
-    private void DeleteState(Defines.FSMDefines.MonsterState state)
+    public void DeleteState(Defines.FSMDefines.MonsterFSMState state)
     {
         if (states.ContainsKey(state)) 
         { 
@@ -29,19 +30,18 @@ public class MonsterFSMManager : MonoBehaviour
         }
     }
 
-    public bool ChangeState(Defines.FSMDefines.MonsterState state)
+    public bool ChangeState(Defines.FSMDefines.MonsterFSMState state)
     {
         if (isThereState)
         {
             currentState.OnExitState();
-            currentState.gameObject.SetActive(false);
         }
 
         if(states.TryGetValue(state, out currentState))
         {
             isThereState = true;
-            currentState.gameObject.SetActive(true);
             currentState.OnEnterState();
+            this.state = state;
         }
         else 
             isThereState= false;
