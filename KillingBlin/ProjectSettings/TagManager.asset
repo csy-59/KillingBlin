@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Door
   - 
   - 
   - 
@@ -40,4 +40,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: map
+    uniqueID: 526595171
+    locked: 0
+  - name: items
+    uniqueID: 3558574683
+    locked: 0
+  - name: enemy
+    uniqueID: 2224749125
+    locked: 0
+  - name: heoro
+    uniqueID: 1431205839
+    locked: 0
+  - name: wall
+    uniqueID: 2454234993
+    locked: 0
+  - name: door
+    uniqueID: 1335059839
     locked: 0

@@ -36,7 +36,7 @@ public class RoomManager : MonoSingleton<RoomManager>
 
     private Room specialRoom;
 
-    private void Start()
+    public void Start()
     {
         roomGrid = new int[gridSizeX, gridSizeY];
         roomQueue = new Queue<Vector2Int>();
@@ -46,7 +46,7 @@ public class RoomManager : MonoSingleton<RoomManager>
         StartRoomGenerationFromRoom(initialRoomIndex);
     }
 
-    private void Update()
+    public void Update()
     {
         // 시작의 방에서부터 방 만들기 시도
         if (roomQueue.Count > 0 && roomCount < maxRooms && generationComplete == false)

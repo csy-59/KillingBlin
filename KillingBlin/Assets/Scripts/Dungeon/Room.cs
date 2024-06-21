@@ -24,7 +24,7 @@ public class Room : MonoBehaviour
         {
             roomType = value;
 
-            foreach(var map in maps)
+            foreach (var map in maps)
                 map.SetActive(false);
 
             if (roomType == RoomType.MAX)
@@ -52,7 +52,7 @@ public class Room : MonoBehaviour
     }
 
     public Vector2Int RoomIndex { get; set; }
-    
+
 
     public void OpenDoor(DoorPosition direction, Room nextRoom)
     {
@@ -60,13 +60,13 @@ public class Room : MonoBehaviour
         int nextRoomIndex = 0;
         switch (direction)
         {
-            case DoorPosition.Top:      { door = topDoor[(int)difficulty]; nextRoomIndex = (int)DoorPosition.Top; break; }
-            case DoorPosition.Bottom:   { door = bottomDoor[(int)difficulty]; nextRoomIndex = (int)DoorPosition.Bottom; break; }
-            case DoorPosition.Left:     { door = leftDoor[(int)difficulty]; nextRoomIndex = (int)DoorPosition.Left; break; }
-            case DoorPosition.Right:    { door = rightDoor[(int)difficulty]; nextRoomIndex = (int)DoorPosition.Right; break; }
+            case DoorPosition.Top: { door = topDoor[(int)difficulty]; nextRoomIndex = (int)DoorPosition.Top; break; }
+            case DoorPosition.Bottom: { door = bottomDoor[(int)difficulty]; nextRoomIndex = (int)DoorPosition.Bottom; break; }
+            case DoorPosition.Left: { door = leftDoor[(int)difficulty]; nextRoomIndex = (int)DoorPosition.Left; break; }
+            case DoorPosition.Right: { door = rightDoor[(int)difficulty]; nextRoomIndex = (int)DoorPosition.Right; break; }
         }
 
-        door.SetActive(true); 
+        door.SetActive(true);
         nextRooms[nextRoomIndex] = nextRoom;
     }
 
@@ -75,13 +75,22 @@ public class Room : MonoBehaviour
         switch (direction)
         {
             case DoorPosition.Top:
-            case DoorPosition.Bottom:   
-            case DoorPosition.Left:     
+            case DoorPosition.Bottom:
+            case DoorPosition.Left:
             case DoorPosition.Right:
                 nextRoom = nextRooms[(int)direction]; break;
             default: nextRoom = null; break;
         }
 
         return (nextRoom == null ? false : true);
+    }
+
+    public void SetRoom()
+    {
+        GameObject map = MapManager.Instance.GetRandomMap(RoomType, Difficulty);
+
+        GameObject go = Instantiate(map);
+        go.transform.position = Vector3.zero;
+        go.GetComponent<Map>().SetRoom(this);
     }
 }

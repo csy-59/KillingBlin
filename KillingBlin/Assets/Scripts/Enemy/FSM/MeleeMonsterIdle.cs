@@ -1,20 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class MeleeMonsterIdle : MonsterStateBase
 {
-    public override void OnEnterState()
+    private Animator animator;
+
+    private MonsterBase enemy;
+
+    public override void Init(MonsterFSMManager manager)
     {
-        throw new System.NotImplementedException();
+        base.Init(manager);
+        enemy = gameObject.GetComponentInChildren<MonsterBase>();
+        animator = gameObject.GetComponentInChildren<Animator>();
     }
 
-    public override void OnExitState()
+    public override void OnEnterState()
     {
-        throw new System.NotImplementedException();
+        // 애니메이션 재생
     }
 
     public override void OnUpdateState()
+    {
+        // 주인공 탐지
+    }
+
+    public override void OnExitState()
     {
         throw new System.NotImplementedException();
     }

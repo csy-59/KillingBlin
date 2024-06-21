@@ -5,12 +5,17 @@ using Defines.FSMDefines;
 
 public abstract class MonsterStateBase : MonoBehaviour
 {
-    public MonsterState State { get; set; }
+    public Defines.FSMDefines.MonsterState State { get; set; }
     private MonsterFSMManager manager;
 
     public void SetFSMManager(MonsterFSMManager manager)
     {
         this.manager = manager;
+    }
+
+    public virtual void Init(MonsterFSMManager manager)
+    {
+        SetFSMManager(manager);
     }
 
     public abstract void OnEnterState();
