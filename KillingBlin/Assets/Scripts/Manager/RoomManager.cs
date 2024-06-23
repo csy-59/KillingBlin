@@ -7,6 +7,7 @@ using UnityEngine.UIElements.Experimental;
 using Defines.DungeonDefines;
 using UnityEditor.Search;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class RoomManager : MonoSingleton<RoomManager>
 {
@@ -18,8 +19,8 @@ public class RoomManager : MonoSingleton<RoomManager>
     const int roomHeight = 12;
     const float roomGenerateFailRate = 0.5f;
 
-    [SerializeField] const int gridSizeX = 15;
-    [SerializeField] const int gridSizeY = 15;
+    const int gridSizeX = 15;
+    const int gridSizeY = 15;
 
     private List<GameObject> roomObjects = new List<GameObject>();
 
@@ -35,6 +36,8 @@ public class RoomManager : MonoSingleton<RoomManager>
     private Room bossRoom;
 
     private Room specialRoom;
+
+    [SerializeField] Image image;
 
     public void Start()
     {
@@ -95,6 +98,7 @@ public class RoomManager : MonoSingleton<RoomManager>
         SetRoomType();
         SetRoomDifficulty();
         SetRooms();
+        image.gameObject.SetActive(false);
     }
 
     // 방의 타입(시작, 보스, 스페셜, 노멀) 지정
