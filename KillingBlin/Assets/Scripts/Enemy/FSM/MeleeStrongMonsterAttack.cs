@@ -6,7 +6,7 @@ using UnityEngine;
 public class MeleeStrongMonsterAttack : MonsterStateBase
 {
     private Animator animator;
-    private Rigidbody rb;
+    private Rigidbody2D rb;
 
     private MeleeStrongMonster enemy;
 
@@ -24,7 +24,7 @@ public class MeleeStrongMonsterAttack : MonsterStateBase
         playerLayer = LayerMask.NameToLayer("Player");
         enemy = gameObject.GetComponentInChildren<MeleeStrongMonster>();
         animator = gameObject.GetComponentInChildren<Animator>();
-        rb = gameObject.GetComponentInChildren<Rigidbody>();
+        rb = gameObject.GetComponentInChildren<Rigidbody2D>();
     }
 
     public override void OnEnterState()
@@ -76,7 +76,7 @@ public class MeleeStrongMonsterAttack : MonsterStateBase
         while(skillTime < enemy.SkillTime)
         {
             skillTime += Time.deltaTime;
-            transform.Translate(dir.normalized * Time.deltaTime * enemy.Status.MoveSpeed * 2f);
+            rb.MovePosition(transform.position + dir.normalized * Time.deltaTime * enemy.Status.MoveSpeed * 2f);
             yield return null;
         }
 
@@ -87,6 +87,11 @@ public class MeleeStrongMonsterAttack : MonsterStateBase
     private void OnCollisionEnter2D(Collision2D collision)
     {
         rb.AddForce(Vector3.down);
-        manager.ChangeState(MonsterFSMState.Stanned);
+        if(collision.gameObject.layer != playerLayer)
+            manager.ChangeState(MonsterFSMState.Stanned);
+        else
+        {
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(enemy.Status.Attack);
+        }
     }
 }

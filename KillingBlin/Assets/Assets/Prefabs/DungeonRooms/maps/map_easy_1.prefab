@@ -613,6 +613,7 @@ MonoBehaviour:
   enemy:
   - {fileID: 6911193010212921193}
   - {fileID: 8195807022034569211}
+  - {fileID: 3717830140716477776}
 --- !u!1001 &112158392842993913
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -719,6 +720,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3700519241896358305, guid: fd91f7d1684071e4eba451b1f1de148e, type: 3}
   m_PrefabInstance: {fileID: 112158392842993913}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3717830140716477776 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3609095955759574441, guid: fd91f7d1684071e4eba451b1f1de148e, type: 3}
+  m_PrefabInstance: {fileID: 112158392842993913}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee39904b0951f3d4e801b8c270712b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4876077566615415378
 PrefabInstance:
   m_ObjectHideFlags: 0

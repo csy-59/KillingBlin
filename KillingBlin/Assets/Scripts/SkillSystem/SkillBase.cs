@@ -18,6 +18,9 @@ public abstract class SkillBase : MonoBehaviour
     private float coolTime_Elapsed = 0f;
     private bool isCoolTime = false;
 
+    protected PlayerSkill playerSkill;
+    protected PlayerController playerController;
+
     private void Awake()
     {
         Init();
@@ -44,7 +47,7 @@ public abstract class SkillBase : MonoBehaviour
 
     public abstract void Skill();
 
-    IEnumerator CoolTime()
+    protected IEnumerator CoolTime()
     {
         isCoolTime = true;
 
@@ -56,5 +59,11 @@ public abstract class SkillBase : MonoBehaviour
         }
 
         isCoolTime = false;
+    }
+
+    public void SetPlayerSkill(PlayerSkill pSkill)
+    {
+        playerSkill = pSkill;
+        playerController = pSkill.GetComponent<PlayerController>();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using Defines.FSMDefines;
+using UnityEditor.PackageManager;
 
 public class MeleeMonster : MonsterBase
 {
@@ -18,7 +19,7 @@ public class MeleeMonster : MonsterBase
         Status.MoveSpeed = moveSpeed;
         Status.AttackSpeed = attackSpeed;
         Status.MaxHealth = maxHealth;
-
+        Status.CurrentHealth = maxHealth;
 
         fsmManager.ChangeState(MonsterFSMState.Idle);
     }

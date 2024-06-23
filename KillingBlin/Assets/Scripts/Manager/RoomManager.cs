@@ -99,6 +99,9 @@ public class RoomManager : MonoSingleton<RoomManager>
         SetRoomDifficulty();
         SetRooms();
         image.gameObject.SetActive(false);
+
+        var player = BattleManager.Instance.CreatePlayer();
+        player.transform.position = Vector2.zero;
     }
 
     // 방의 타입(시작, 보스, 스페셜, 노멀) 지정

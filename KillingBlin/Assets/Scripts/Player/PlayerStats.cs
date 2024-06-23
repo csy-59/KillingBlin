@@ -42,8 +42,8 @@ public class PlayerStats : MonoBehaviour
         PlayerController playerController = GetComponent<PlayerController>();
         if (playerController != null)
         {
-            playerController.maxHealth += 10; // 최대 체력 증가
-            playerController.attackDamage += 2; // 공격력 증가
+            playerController.Status.MaxHealth += 10; // 최대 체력 증가
+            playerController.Status.Attack += 2; // 공격력 증가
         }
     }
 

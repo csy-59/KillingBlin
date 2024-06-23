@@ -59,4 +59,11 @@ public class MonsterBase : Character
             fsmManager.AddState(state.state, state.script);
         }
     }
+
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+        if (Status.IsDead)
+            fsmManager.ChangeState(MonsterFSMState.Dead);
+    }
 }

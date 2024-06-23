@@ -22,6 +22,7 @@ public class MeleeMonsterStunned : MonsterStateBase
     public override void OnEnterState()
     {
         animator.SetTrigger(AnimationID.Stunned);
+        elapsedTime = 0.0f;
     }
 
     public override void OnExitState()

@@ -12,6 +12,8 @@ public class Room : MonoBehaviour
     [SerializeField] private GameObject[] leftDoor = new GameObject[(int)Difficulty.Boss + 1];
     [SerializeField] private GameObject[] rightDoor = new GameObject[(int)Difficulty.Boss + 1];
 
+    [Header("SpwanPosition")]
+    [SerializeField] private GameObject[] SpawnPosition = new GameObject[(int)DoorPosition.MAX];
     private Room[] nextRooms = new Room[(int)DoorPosition.MAX];
 
     [Header("RoomType")]
@@ -55,6 +57,7 @@ public class Room : MonoBehaviour
 
     [Header("Map")]
     [SerializeField] private Transform mapPosition;
+    private Map map;
 
 
     public void OpenDoor(DoorPosition direction, Room nextRoom)
@@ -94,7 +97,44 @@ public class Room : MonoBehaviour
 
         GameObject go = Instantiate(map);
         go.transform.parent = mapPosition;
+        this.map = go.GetComponent<Map>();
         go.transform.localPosition = Vector3.zero;
         go.GetComponent<Map>().SetRoom(this);
+    }
+
+    public void MoveToNextRoom(DoorPosition position, PlayerController player)
+    {
+        if(map.IsClear == false)
+        {
+            return;
+        }
+
+        switch (position)
+        {
+            case DoorPosition.Top:
+                nextRooms[(int)position]?.MoveFormNextRoom(DoorPosition.Bottom, player); break;
+            case DoorPosition.Bottom:
+                nextRooms[(int)position]?.MoveFormNextRoom(DoorPosition.Top, player); break;
+            case DoorPosition.Left:
+                nextRooms[(int)position]?.MoveFormNextRoom(DoorPosition.Right, player); break;
+            case DoorPosition.Right:
+                nextRooms[(int)position]?.MoveFormNextRoom(DoorPosition.Left,player); break;
+        }
+    }
+
+    public void MoveFormNextRoom(DoorPosition position, PlayerController player)
+    {
+        player.transform.position = SpawnPosition[(int)position].transform.position;
+
+        Vector3 CameraOffset = Vector3.zero;
+        switch (position)
+        { 
+            case DoorPosition.Top: CameraOffset = Vector3.down * 12; break;
+            case DoorPosition.Bottom: CameraOffset = Vector3.up * 12; break;
+            case DoorPosition.Left: CameraOffset = Vector3.right * 20; break;
+            case DoorPosition.Right:CameraOffset = Vector3.left * 20; break;
+        }
+
+        Camera.main.transform.position = Camera.main.transform.position + CameraOffset;
     }
 }

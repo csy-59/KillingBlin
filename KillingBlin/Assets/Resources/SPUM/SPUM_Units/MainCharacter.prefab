@@ -842,7 +842,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3417589304397148491}
-  - component: {fileID: 4510342280633769818}
   - component: {fileID: 1012288243617462312}
   - component: {fileID: 5956840188852012183}
   - component: {fileID: 4385787315430855640}
@@ -875,28 +874,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4510342280633769818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498251034587943088}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28ac21711b0ec40a0812d33a586eb7ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _version: 166
-  _spriteOBj: {fileID: 2735732726852305797}
-  EditChk: 0
-  _code: Unit000
-  _anim: {fileID: 1786005425694787383}
-  _horse: 0
-  _horseString: 
-  UnitTypeChanged:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!50 &1012288243617462312
 Rigidbody2D:
   serializedVersion: 4
@@ -971,9 +948,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687db5ac0b994574f81d844786c4d067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  attackDamage: 10
 --- !u!114 &1229752697590359065
 MonoBehaviour:
   m_ObjectHideFlags: 0

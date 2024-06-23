@@ -1,14 +1,12 @@
+using Defines.FSMDefines;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Defines.FSMDefines;
 
-public class MeleeSkillOne : SkillBase
+public class MeleeSkillForth : SkillBase
 {
-    private Animator animator;
-    private PlayerController controller;
+    Animator animator;
     [SerializeField] float radios = 0.3f;
-    [SerializeField] Vector2 attackPosition;
 
     LayerMask enemeyLayer = LayerMask.NameToLayer("Enemy");
 
@@ -19,7 +17,7 @@ public class MeleeSkillOne : SkillBase
 
     public override void Skill()
     {
-        animator.SetTrigger(AnimationID.Melee_Attack);
+        animator.SetTrigger(AnimationID.Melee_Skill);
 
     }
 
@@ -28,11 +26,12 @@ public class MeleeSkillOne : SkillBase
     /// </summary>
     public void OnAttack()
     {
-        Collider2D collider = Physics2D.OverlapCircle(attackPosition, radios, enemeyLayer);
-        if (collider != null)
+        var colliders = Physics2D.OverlapCircleAll(Vector2.zero, radios, enemeyLayer);
+        if(colliders.Length >0)
         {
+            int index = Random.Range(0, colliders.Length);
             // АјАн
-            MonsterBase mb = collider.GetComponent<MonsterBase>();
+            MonsterBase mb = colliders[index].GetComponent<MonsterBase>();
             mb.TakeDamage(playerController.Status.Attack);
         }
     }

@@ -30,5 +30,9 @@ public class PlayerSkill : MonoBehaviour
             return;
     }
 
-
+    public void SetSkill(int index, SkillBase skill)
+    {
+        Skill[index] = skill;
+        skill.SetPlayerSkill(this);
+    }
 }

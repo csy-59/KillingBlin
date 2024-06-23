@@ -1,12 +1,11 @@
+using Defines.FSMDefines;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Defines.FSMDefines;
 
-public class MeleeSkillOne : SkillBase
+public class MeleeSkillSec : SkillBase
 {
-    private Animator animator;
-    private PlayerController controller;
+    Animator animator;
     [SerializeField] float radios = 0.3f;
     [SerializeField] Vector2 attackPosition;
 
@@ -19,7 +18,7 @@ public class MeleeSkillOne : SkillBase
 
     public override void Skill()
     {
-        animator.SetTrigger(AnimationID.Melee_Attack);
+        animator.SetTrigger(AnimationID.Melee_Skill);
 
     }
 
@@ -28,8 +27,8 @@ public class MeleeSkillOne : SkillBase
     /// </summary>
     public void OnAttack()
     {
-        Collider2D collider = Physics2D.OverlapCircle(attackPosition, radios, enemeyLayer);
-        if (collider != null)
+        var colliders = Physics2D.OverlapCircleAll(attackPosition, radios, enemeyLayer);
+        foreach (var collider in colliders)
         {
             // АјАн
             MonsterBase mb = collider.GetComponent<MonsterBase>();
