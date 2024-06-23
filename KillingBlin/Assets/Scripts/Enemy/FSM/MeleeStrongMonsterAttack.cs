@@ -76,7 +76,7 @@ public class MeleeStrongMonsterAttack : MonsterStateBase
         while(skillTime < enemy.SkillTime)
         {
             skillTime += Time.deltaTime;
-            rb.MovePosition(transform.position + dir.normalized * Time.deltaTime * enemy.Status.MoveSpeed * 2f);
+            rb.MovePosition(transform.position + dir.normalized * Time.deltaTime * enemy.Status.MoveSpeed);
             yield return null;
         }
 

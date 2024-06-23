@@ -14,7 +14,7 @@ public class MeleeMonsterAttack : MonsterStateBase
     public override void Init(MonsterFSMManager manager)
     {
         base.Init(manager);
-        playerLayer = LayerMask.NameToLayer("Player");
+        playerLayer = LayerMask.GetMask("Player");
         enemy = gameObject.GetComponentInChildren<MonsterBase>();
         animator = gameObject.GetComponentInChildren<Animator>();
     }
@@ -58,6 +58,7 @@ public class MeleeMonsterAttack : MonsterStateBase
         Collider2D collider = Physics2D.OverlapCircle(enemy.AttackPosition, enemy.AttackRadios, playerLayer);
         if(collider != null)
         {
+            collider.gameObject.GetComponent<PlayerController>().TakeDamage(enemy.Status.Attack);
         }
     }
 }

@@ -9,11 +9,13 @@ public class MeleeSkillOne : SkillBase
     private PlayerController controller;
     [SerializeField] float radios = 0.3f;
     [SerializeField] Vector2 attackPosition;
+    [SerializeField] LayerMask layer;
 
-    LayerMask enemeyLayer = LayerMask.NameToLayer("Enemy");
+    LayerMask enemeyLayer;
 
     public override void Init()
     {
+        enemeyLayer = LayerMask.GetMask("Enemy");
         animator = GetComponent<Animator>();
     }
 

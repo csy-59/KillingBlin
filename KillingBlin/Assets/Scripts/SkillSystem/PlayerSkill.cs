@@ -6,13 +6,14 @@ public class PlayerSkill : MonoBehaviour
 {
     public enum SkillType
     {
+        MouseLBtn,
         Q,
         E,
         R,
         MAX
     }
 
-    private SkillBase[] Skill = new SkillBase[(int)SkillType.MAX];
+    [SerializeField] private SkillBase[] Skill = new SkillBase[(int)SkillType.MAX];
 
     /// <summary>
     /// 스킬 사용

@@ -8,10 +8,11 @@ public class MeleeSkillThird : SkillBase
     Animator animator;
     [SerializeField] float radios = 0.3f;
 
-    LayerMask enemeyLayer = LayerMask.NameToLayer("Enemy");
+    LayerMask enemeyLayer;
 
     public override void Init()
     {
+        enemeyLayer = LayerMask.GetMask("Enemy");
         animator = GetComponent<Animator>();
     }
 
