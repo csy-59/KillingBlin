@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Defines.DungeonDefines;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEngine.SceneManagement;
 
 public class Room : MonoBehaviour
 {
@@ -125,6 +126,9 @@ public class Room : MonoBehaviour
     public void MoveFormNextRoom(DoorPosition position, PlayerController player)
     {
         player.transform.position = SpawnPosition[(int)position].transform.position;
+
+        if (this.roomType == RoomType.Boss)
+            SceneManager.LoadScene("Ending");
 
         Vector3 CameraOffset = Vector3.zero;
         switch (position)
