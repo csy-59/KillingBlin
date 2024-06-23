@@ -53,6 +53,9 @@ public class Room : MonoBehaviour
 
     public Vector2Int RoomIndex { get; set; }
 
+    [Header("Map")]
+    [SerializeField] private Transform mapPosition;
+
 
     public void OpenDoor(DoorPosition direction, Room nextRoom)
     {
@@ -90,7 +93,8 @@ public class Room : MonoBehaviour
         GameObject map = MapManager.Instance.GetRandomMap(RoomType, Difficulty);
 
         GameObject go = Instantiate(map);
-        go.transform.position = Vector3.zero;
+        go.transform.parent = mapPosition;
+        go.transform.localPosition = Vector3.zero;
         go.GetComponent<Map>().SetRoom(this);
     }
 }

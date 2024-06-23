@@ -94,6 +94,7 @@ public class RoomManager : MonoSingleton<RoomManager>
     {
         SetRoomType();
         SetRoomDifficulty();
+        SetRooms();
     }
 
     // 방의 타입(시작, 보스, 스페셜, 노멀) 지정
@@ -183,6 +184,14 @@ public class RoomManager : MonoSingleton<RoomManager>
         startRoom.Difficulty = Difficulty.None;
         specialRoom.Difficulty = Difficulty.None;
         bossRoom.Difficulty = Difficulty.Boss;
+    }
+
+    private void SetRooms()
+    {
+        foreach (var r in roomObjects)
+        {
+            r.GetComponent<Room>().SetRoom();
+        }
     }
 
     private void SetAroundRoomDifficulty(Room originRoom, Difficulty difficulty)

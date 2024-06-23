@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8950264812608623329}
   - component: {fileID: 655976465525729992}
   m_Layer: 0
-  m_Name: map
+  m_Name: map_mid_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -343,7 +343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1448387882177008224, guid: fd91f7d1684071e4eba451b1f1de148e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3700519241896358305, guid: fd91f7d1684071e4eba451b1f1de148e, type: 3}
       propertyPath: m_Pivot.x
@@ -460,7 +460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1448387882177008224, guid: fd91f7d1684071e4eba451b1f1de148e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3700519241896358305, guid: fd91f7d1684071e4eba451b1f1de148e, type: 3}
       propertyPath: m_Pivot.x
@@ -577,7 +577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1448387882177008224, guid: fd91f7d1684071e4eba451b1f1de148e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3700519241896358305, guid: fd91f7d1684071e4eba451b1f1de148e, type: 3}
       propertyPath: m_Pivot.x
@@ -796,7 +796,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1448387882177008224, guid: fd91f7d1684071e4eba451b1f1de148e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3700519241896358305, guid: fd91f7d1684071e4eba451b1f1de148e, type: 3}
       propertyPath: m_Pivot.x

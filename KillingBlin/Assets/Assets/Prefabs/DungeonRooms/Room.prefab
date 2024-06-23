@@ -1847,6 +1847,7 @@ MonoBehaviour:
   - {fileID: 6543199374703587196}
   - {fileID: 7233649756182809267}
   difficulty: 0
+  mapPosition: {fileID: 899150096963154074}
 --- !u!1 &3181385980681262880
 GameObject:
   m_ObjectHideFlags: 0
