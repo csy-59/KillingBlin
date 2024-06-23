@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillTreeManager : MonoBehaviour
+public class SkillTreeManager : MonoSingleton<SkillTreeManager>
 {
     [SerializeField] private SkillBase[] skills;
 
@@ -14,7 +14,7 @@ public class SkillTreeManager : MonoBehaviour
         }
     }
 
-    private SkillBase GetSkill(int index)
+    public SkillBase GetSkill(int index)
     {
         return skills[index];
     }

@@ -29,6 +29,15 @@ public class MeleeMonsterMove : MonsterStateBase
 
     public override void OnUpdateState()
     {
+
+        if (Vector3.Dot(enemy.Target.transform.position, enemy.Target.transform.position - transform.position) < 0)
+        {
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        }
     }
 
     public override void OnFixedUpdateState()
@@ -38,6 +47,7 @@ public class MeleeMonsterMove : MonsterStateBase
             manager.ChangeState(MonsterFSMState.Attack);
         }
 
-        rb.MovePosition(transform.position + (enemy.Target.transform.position - transform.position).normalized * Time.deltaTime * enemy.Status.MoveSpeed);
+        rb.MovePosition(transform.position + 
+            (enemy.Target.transform.position - transform.position).normalized * Time.deltaTime * enemy.Status.MoveSpeed);
     }
 }

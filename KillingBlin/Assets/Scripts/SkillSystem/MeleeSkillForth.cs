@@ -8,10 +8,11 @@ public class MeleeSkillForth : SkillBase
     Animator animator;
     [SerializeField] float radios = 0.3f;
 
-    LayerMask enemeyLayer = LayerMask.NameToLayer("Enemy");
+    LayerMask enemeyLayer;
 
     public override void Init()
     {
+        enemeyLayer = LayerMask.GetMask("Enemy");
         animator = GetComponent<Animator>();
     }
 
@@ -32,7 +33,7 @@ public class MeleeSkillForth : SkillBase
             int index = Random.Range(0, colliders.Length);
             // АјАн
             MonsterBase mb = colliders[index].GetComponent<MonsterBase>();
-            mb.TakeDamage(playerController.Status.Attack);
+            mb.TakeDamage(playerController.Status.Attack * 2);
         }
     }
 

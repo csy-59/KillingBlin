@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class PlayerManager : MonoBehaviour
+public class PlayerManager1 : MonoBehaviour
 {
     public PlayerObj _prefabObj;
     public List<GameObject> _savedUnitList = new List<GameObject>();
