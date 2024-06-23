@@ -11,7 +11,6 @@ namespace Defines
             Idle,
             Chase,
             Attack,
-            Damaged,
             Stanned,
             Skill,
             Dead
@@ -25,6 +24,8 @@ namespace Defines
             public static readonly int Magic_Attack = Animator.StringToHash("Magic_Attack");
             public static readonly int Dead = Animator.StringToHash("Dead");
             public static readonly int Stunned = Animator.StringToHash("Stun");
+            public static readonly int Melee_Skill = Animator.StringToHash("Melee_Skill");
+            public static readonly int Magic_Skill = Animator.StringToHash("Magic_Skill");
         }
     }
 }

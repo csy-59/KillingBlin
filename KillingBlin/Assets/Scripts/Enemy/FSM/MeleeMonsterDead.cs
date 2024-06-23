@@ -1,24 +1,30 @@
-using Defines.FSMDefines;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Defines.FSMDefines;
 
-public class MeleeMonsterMove : MonsterStateBase
+public class MeleeMonsterDead : MonsterStateBase
 {
     private Animator animator;
 
     private MonsterBase enemy;
+    private CircleCollider2D collider;
 
+    private float elapsedTime = 0f;
+    private float DieTime = 2f;
 
     public override void Init(MonsterFSMManager manager)
     {
         base.Init(manager);
         enemy = gameObject.GetComponentInChildren<MonsterBase>();
         animator = gameObject.GetComponentInChildren<Animator>();
-    }
+        collider = gameObject.GetComponentInChildren<CircleCollider2D>();
+    } 
+
     public override void OnEnterState()
     {
-        animator.SetTrigger(AnimationID.Move);
+        animator.SetTrigger(AnimationID.Dead);
+        collider.enabled = false;
     }
 
     public override void OnExitState()
@@ -27,14 +33,10 @@ public class MeleeMonsterMove : MonsterStateBase
 
     public override void OnUpdateState()
     {
-        transform.Translate((enemy.Target.transform.position - transform.position).normalized * Time.deltaTime * enemy.Status.MoveSpeed);
-    }
-
-    public override void OnFixedUpdateState()
-    {
-        if ((enemy.Target.transform.position - transform.position).magnitude <= enemy.AttackRadios)
+        elapsedTime += Time.deltaTime;
+        if (elapsedTime > DieTime)
         {
-            manager.ChangeState(MonsterFSMState.Attack);
+            transform.parent.gameObject.SetActive(false);
         }
     }
 }

@@ -5,19 +5,19 @@ using UnityEngine;
 public class Status
 {
     /// <summary> 공격력 </summary>
-    public int Attack { get; private set; }
+    public int Attack { get; set; }
     
     /// <summary> 최대 체력 </summary>
-    public int MaxHealth { get; private set; }
+    public int MaxHealth { get; set; }
 
     /// <summary> 현재 체력 </summary>
-    public int CurrentHealth { get; private set; }
+    public int CurrentHealth { get; set; }
     
     /// <summary> 공격속도. 공격하는데 드는 속도. </summary>
-    public float AttackSpeed { get; private set; }
+    public float AttackSpeed { get; set; }
     
     /// <summary> 이동 속도. 1초간 움직일 속도. </summary>
-    public float MoveSpeed { get; private set; }
+    public float MoveSpeed { get; set; }
 
     /// <summary> 죽었는지 여부 </summary>
     public bool IsDead => CurrentHealth <= 0;

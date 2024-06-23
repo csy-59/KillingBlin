@@ -2,12 +2,15 @@ using Defines.FSMDefines;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Defines.FSMDefines;
+using System;
 
-public class MeleeMonsterMove : MonsterStateBase
+public class MeleeMonsterStunned : MonsterStateBase
 {
     private Animator animator;
 
     private MonsterBase enemy;
+    private float elapsedTime = 0.0f;
 
 
     public override void Init(MonsterFSMManager manager)
@@ -18,7 +21,7 @@ public class MeleeMonsterMove : MonsterStateBase
     }
     public override void OnEnterState()
     {
-        animator.SetTrigger(AnimationID.Move);
+        animator.SetTrigger(AnimationID.Stunned);
     }
 
     public override void OnExitState()
@@ -27,14 +30,10 @@ public class MeleeMonsterMove : MonsterStateBase
 
     public override void OnUpdateState()
     {
-        transform.Translate((enemy.Target.transform.position - transform.position).normalized * Time.deltaTime * enemy.Status.MoveSpeed);
-    }
-
-    public override void OnFixedUpdateState()
-    {
-        if ((enemy.Target.transform.position - transform.position).magnitude <= enemy.AttackRadios)
+        elapsedTime += Time.deltaTime;
+        if (elapsedTime < enemy.StunnedTime)
         {
-            manager.ChangeState(MonsterFSMState.Attack);
+            manager.ChangeState(manager.PrevState);
         }
     }
 }

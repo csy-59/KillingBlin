@@ -9,8 +9,15 @@ public class MonsterFSMManager : MonoBehaviour
     private Dictionary<Defines.FSMDefines.MonsterFSMState, MonsterStateBase> states = new Dictionary<Defines.FSMDefines.MonsterFSMState, MonsterStateBase>();
     private bool isThereState = false;
     private MonsterStateBase currentState;
-    [SerializeField] MonsterFSMState state;
-    
+    [SerializeField] MonsterFSMState _currentState;
+    private MonsterFSMState prevState;
+    public MonsterFSMState PrevState { get; private set; }
+
+    public void Awake()
+    {
+        isThereState = false;
+    }
+
     public GameObject GetMyGameObject()
     {
         return gameObject;
@@ -35,13 +42,14 @@ public class MonsterFSMManager : MonoBehaviour
         if (isThereState)
         {
             currentState.OnExitState();
+            prevState = _currentState;
         }
 
         if(states.TryGetValue(state, out currentState))
         {
-            isThereState = true;
             currentState.OnEnterState();
-            this.state = state;
+            this._currentState = state;
+            isThereState = true;
         }
         else 
             isThereState= false;

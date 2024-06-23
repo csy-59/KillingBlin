@@ -6,7 +6,7 @@ using Defines.MonsterDefines;
 using Defines.FSMDefines;
 
 
-public class MonsterBase : MonoBehaviour
+public class MonsterBase : Character
 {
     [Serializable]
     protected class MonsterStateAndScripts
@@ -36,14 +36,11 @@ public class MonsterBase : MonoBehaviour
     [SerializeField] private float attackRadios;
     public float AttackRadios { get => attackRadios; protected set => attackRadios = value; }
 
-    [SerializeField] private float moveSpeed;
-    public float MoveSpeed { get => moveSpeed; protected set => moveSpeed = value; }
-
-    [SerializeField] private float attackSpeed;
-    public float AttackSpeed { get => attackSpeed; protected set => attackSpeed = value; }
-
     [SerializeField] private Vector2 attackPosition;
     public Vector2 AttackPosition { get => attackPosition; protected set => attackPosition = value; }
+
+    [SerializeField] private float stunnedTime;
+    public float StunnedTime { get => stunnedTime; protected set => stunnedTime = value; }
 
     public GameObject Target { get; set; }
 

@@ -22,6 +22,7 @@ public class MeleeMonserAttack : MonsterStateBase
     public override void OnEnterState()
     {
         animator.SetTrigger(AnimationID.Melee_Attack);
+        elapsedTime = 0.0f;
     }
 
     public override void OnExitState()
@@ -31,16 +32,20 @@ public class MeleeMonserAttack : MonsterStateBase
     public override void OnUpdateState()
     {
         elapsedTime += Time.deltaTime;
-        if(elapsedTime >= enemy.AttackSpeed)
+        if(elapsedTime >= enemy.Status.AttackSpeed)
         {
             animator.SetTrigger(AnimationID.Melee_Attack);
-            elapsedTime -= enemy.AttackSpeed;
+            elapsedTime -= enemy.Status.AttackSpeed;
         }
     }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
-        manager.ChangeState(MonsterFSMState.Chase);
+        if (collision.gameObject == enemy.Target)
+        {
+            manager.ChangeState(MonsterFSMState.Chase);
+        }
+
     }
 
     public void OnAttackAnimationEnd()
@@ -50,6 +55,9 @@ public class MeleeMonserAttack : MonsterStateBase
 
     public void OnAttack()
     {
-        Physics2D.OverlapCircle(enemy.AttackPosition, 0.5f, playerLayer);
+        Collider2D collider = Physics2D.OverlapCircle(enemy.AttackPosition, enemy.AttackRadios, playerLayer);
+        if(collider != null)
+        {
+        }
     }
 }

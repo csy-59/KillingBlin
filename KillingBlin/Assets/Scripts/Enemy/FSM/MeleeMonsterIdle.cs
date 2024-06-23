@@ -2,6 +2,7 @@ using Defines.FSMDefines;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Animations;
 using UnityEngine.Lumin;
 
@@ -33,8 +34,8 @@ public class MeleeMonsterIdle : MonsterStateBase
             return;
         }
 
-        manager.ChangeState(MonsterFSMState.Chase);
         (enemy as MeleeMonster).Target = collision.gameObject;
+        manager.ChangeState(MonsterFSMState.Chase);
     }
 
     public override void OnExitState()
