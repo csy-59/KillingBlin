@@ -9,6 +9,8 @@ public class PlayerStats : MonoBehaviour
     public int xpToNextLevel = 100; // 다음 레벨까지 필요한 경험치
     public int xpIncreasePerLevel = 50; // 레벨업 할 때마다 증가하는 경험치
 
+    public delegate void _onLevelUp(int level);
+    public event _onLevelUp OnLevelUp;
 
     void Start()
     {
@@ -30,6 +32,7 @@ public class PlayerStats : MonoBehaviour
         // 레벨업 시 플레이어의 능력치를 증가시키는 코드 추가
         IncreasePlayerStats();
         Debug.Log("Level Up! New Level: " + level);
+        //OnLevelUp.Invoke();
     }
 
     private void IncreasePlayerStats()
