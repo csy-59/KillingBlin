@@ -4,10 +4,10 @@ using UnityEngine;
 using Defines.FSMDefines;
 using System;
 
-public abstract class MonsterStateBase : MonoBehaviour
+public abstract class BossMonsterStateBase : MonoBehaviour
 {
     public Defines.FSMDefines.MonsterFSMState State { get; set; }
-    protected MonsterFSMManager manager;
+    protected BossMeleeMonsterFSMManager manager;
     protected MonsterBase monster;
 
     public void SetFSMManager(MonsterFSMManager manager)
@@ -20,8 +20,6 @@ public abstract class MonsterStateBase : MonoBehaviour
         SetFSMManager(manager);
     }
 
-
-
     public abstract void OnEnterState();
     public virtual void OnFixedUpdateState() { }
     public abstract void OnUpdateState();
@@ -32,7 +30,7 @@ public abstract class MonsterStateBase : MonoBehaviour
         this.monster = monster;
     }
 
-    internal void Init(BossMeleeMonsterFSMManager manager)
+    public static implicit operator BossMonsterStateBase(MonsterStateBase v)
     {
         throw new NotImplementedException();
     }
