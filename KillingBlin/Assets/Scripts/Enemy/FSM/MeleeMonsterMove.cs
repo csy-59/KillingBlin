@@ -8,6 +8,7 @@ public class MeleeMonsterMove : MonsterStateBase
     private Animator animator;
 
     private MonsterBase enemy;
+    private Rigidbody2D rb;
 
 
     public override void Init(MonsterFSMManager manager)
@@ -15,6 +16,7 @@ public class MeleeMonsterMove : MonsterStateBase
         base.Init(manager);
         enemy = gameObject.GetComponentInChildren<MonsterBase>();
         animator = gameObject.GetComponentInChildren<Animator>();
+        rb = gameObject.GetComponentInChildren<Rigidbody2D>();
     }
     public override void OnEnterState()
     {
@@ -27,7 +29,6 @@ public class MeleeMonsterMove : MonsterStateBase
 
     public override void OnUpdateState()
     {
-        transform.Translate((enemy.Target.transform.position - transform.position).normalized * Time.deltaTime * enemy.Status.MoveSpeed);
     }
 
     public override void OnFixedUpdateState()
@@ -36,5 +37,7 @@ public class MeleeMonsterMove : MonsterStateBase
         {
             manager.ChangeState(MonsterFSMState.Attack);
         }
+
+        rb.MovePosition(transform.position + (enemy.Target.transform.position - transform.position).normalized * Time.deltaTime * enemy.Status.MoveSpeed);
     }
 }

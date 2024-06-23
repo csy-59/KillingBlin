@@ -18,6 +18,16 @@ public abstract class SkillBase : MonoBehaviour
     private float coolTime_Elapsed = 0f;
     private bool isCoolTime = false;
 
+    private void Awake()
+    {
+        Init();
+    }
+
+    /// <summary>
+    /// 초기화
+    /// </summary>
+    public abstract void Init();
+
     /// <summary>
     /// 스킬 사용
     /// </summary>

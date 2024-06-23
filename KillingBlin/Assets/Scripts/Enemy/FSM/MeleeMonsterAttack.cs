@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeMonserAttack : MonsterStateBase
+public class MeleeMonsterAttack : MonsterStateBase
 {
     private Animator animator;
 
