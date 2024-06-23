@@ -1715,6 +1715,8 @@ GameObject:
   - component: {fileID: 32476469689107530}
   - component: {fileID: 530990109731473922}
   - component: {fileID: 7863197395014925629}
+  - component: {fileID: 8276313854645863443}
+  - component: {fileID: 1330822866509671138}
   m_Layer: 8
   m_Name: UnitRoot
   m_TagString: Untagged
@@ -1794,9 +1796,9 @@ MonoBehaviour:
   - state: 2
     script: {fileID: 32476469689107530}
   - state: 3
-    script: {fileID: 32476469689107530}
+    script: {fileID: 1330822866509671138}
   - state: 5
-    script: {fileID: 32476469689107530}
+    script: {fileID: 8276313854645863443}
   attack: 0
   difficulty: 0
   isBoss: 0
@@ -1917,6 +1919,30 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.35}
   serializedVersion: 2
   m_Radius: 0.4
+--- !u!114 &8276313854645863443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3616403918594098218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14cb7a3a03298774d8578053a76a9d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1330822866509671138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3616403918594098218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ea76a6ba524c249aeed53402bdc08c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3828856282212171562
 GameObject:
   m_ObjectHideFlags: 0

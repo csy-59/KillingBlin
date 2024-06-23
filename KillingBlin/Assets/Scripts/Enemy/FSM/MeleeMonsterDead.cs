@@ -11,7 +11,7 @@ public class MeleeMonsterDead : MonsterStateBase
     private CircleCollider2D collider;
 
     private float elapsedTime = 0f;
-    private float DieTime = 2f;
+    private float DieTime = 1f;
 
     public override void Init(MonsterFSMManager manager)
     {
@@ -19,12 +19,14 @@ public class MeleeMonsterDead : MonsterStateBase
         enemy = gameObject.GetComponentInChildren<MonsterBase>();
         animator = gameObject.GetComponentInChildren<Animator>();
         collider = gameObject.GetComponentInChildren<CircleCollider2D>();
+
     } 
 
     public override void OnEnterState()
     {
         animator.SetTrigger(AnimationID.Dead);
         collider.enabled = false;
+        elapsedTime = 0f;
     }
 
     public override void OnExitState()
@@ -34,9 +36,9 @@ public class MeleeMonsterDead : MonsterStateBase
     public override void OnUpdateState()
     {
         elapsedTime += Time.deltaTime;
-        if (elapsedTime > DieTime)
+        if (elapsedTime >= DieTime)
         {
-            transform.parent.gameObject.SetActive(false);
+            Destroy(transform.parent.gameObject);
         }
     }
 }
