@@ -41,51 +41,51 @@ public class PlayerController : MonoBehaviour
         // 점프한다.
         if (Input.GetKeyDown(KeyCode.W))
         {
-            this.animator.SetTrigger("RunTrigger");
+            this.animator.SetTrigger("Move");
         }
 
         // 활 공격
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            this.animator.SetTrigger("isBowAttacking");
+            this.animator.SetTrigger("Bow_Attack");
             Debug.Log("테스트");
         }
 
         // 마법 공격
         if (Input.GetKeyDown(KeyCode.X))
         {
-            this.animator.SetTrigger("isMagicAttacking");
+            this.animator.SetTrigger("Magic_Attack");
         }
 
         // 그냥 공격
         if (Input.GetKeyDown(KeyCode.C))
         {
-            this.animator.SetTrigger("isNormalAttacking");
+            this.animator.SetTrigger("Melee_Attack");
         }
 
         // 활 특수 공격
         if (Input.GetKeyDown(KeyCode.V))
         {
-            this.animator.SetTrigger("isBowCriticalAttacking");
+            this.animator.SetTrigger("Bow_Skill");
         }
 
         // 마법 특수 공격
         if (Input.GetKeyDown(KeyCode.B))
         {
-            this.animator.SetTrigger("isMagicCriticalAttacking");
+            this.animator.SetTrigger("Magic_Skill");
         }
 
         // 그냥 특수 공격
         if (Input.GetKeyDown(KeyCode.N))
         {
-            this.animator.SetTrigger("isNormalCriticalAttacking");
+            this.animator.SetTrigger("Melee_Skill");
         }
 
-        //// 수정 필요
-        //if (/*플레이어의 체력이 0이 되었을때*/)
-        //{
-        //    this.animator.SetTrigger("Death");
-        //}
+        // 수정 필요
+        if (currentHealth == 0)
+        {
+            this.animator.SetTrigger("Death");
+        }
 
 
         // 좌우 이동
