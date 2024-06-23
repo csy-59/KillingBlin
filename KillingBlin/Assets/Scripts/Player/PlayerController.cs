@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         this.rigid2D = GetComponent<Rigidbody2D>();
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
 
         currentHealth = maxHealth;
     }
@@ -45,38 +45,37 @@ public class PlayerController : MonoBehaviour
         }
 
         // 활 공격
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             this.animator.SetTrigger("isBowAttacking");
-            Debug.Log("테스트");
         }
 
         // 마법 공격
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             this.animator.SetTrigger("isMagicAttacking");
         }
 
         // 그냥 공격
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             this.animator.SetTrigger("isNormalAttacking");
         }
 
         // 활 특수 공격
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             this.animator.SetTrigger("isBowCriticalAttacking");
         }
 
         // 마법 특수 공격
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             this.animator.SetTrigger("isMagicCriticalAttacking");
         }
 
         // 그냥 특수 공격
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             this.animator.SetTrigger("isNormalCriticalAttacking");
         }
@@ -91,24 +90,18 @@ public class PlayerController : MonoBehaviour
         // 좌우 이동
         int key = 0;
         if (Input.GetKey(KeyCode.D))
-        {
             key = 1;
-            transform.Translate(Vector3.right * Time.deltaTime * 5);
-        }
         if (Input.GetKey(KeyCode.A))
-        {
             key = -1;
-            transform.Translate(Vector3.left * Time.deltaTime * 5);
-        }
 
         // 플레이어의 속도
         float speedx = Mathf.Abs(this.rigid2D.velocity.x);
 
-        //// 스피드 제한
-        //if (speedx < this.maxWalkSpeed)
-        //{
-        //    this.rigid2D.AddForce(transform.right * key * this.walkForce);
-        //}
+        // 스피드 제한
+        if (speedx < this.maxWalkSpeed)
+        {
+            this.rigid2D.AddForce(transform.right * key * this.walkForce);
+        }
 
         // 움직이는 방향에 따라 반전한다.
         if (key != 0)

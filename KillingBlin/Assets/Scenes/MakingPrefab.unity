@@ -229,10 +229,6 @@ GameObject:
   - component: {fileID: 1757028547}
   - component: {fileID: 1757028546}
   - component: {fileID: 1757028545}
-  - component: {fileID: 1757028549}
-  - component: {fileID: 1757028548}
-  - component: {fileID: 1757028551}
-  - component: {fileID: 1757028550}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -255,7 +251,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -435,68 +431,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &1757028548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757028541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80edf43d920577e49aeb668aa3af467d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  level: 1
-  currentXP: 0
-  xpToNextLevel: 100
-  xpIncreasePerLevel: 50
---- !u!114 &1757028549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757028541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 687db5ac0b994574f81d844786c4d067, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  attackDamage: 10
---- !u!114 &1757028550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757028541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80edf43d920577e49aeb668aa3af467d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  level: 1
-  currentXP: 0
-  xpToNextLevel: 100
-  xpIncreasePerLevel: 50
---- !u!114 &1757028551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757028541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 687db5ac0b994574f81d844786c4d067, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  attackDamage: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
